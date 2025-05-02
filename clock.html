@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examination Rules and Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      background-color: #fff8dc;
+      color: #000;
+      font-weight: bold;
+      overflow: hidden;
+    }
+
+    .flex-row {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    .left-section,
+    .right-section {
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    .left-section {
+      flex: 1.2;
+      border-right: 3px solid #999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      background: linear-gradient(180deg, #f5f5f5, #e0e0e0);
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-height: 20%;
+    }
+
+    .logo img {
+      max-width: 50%;
+      height: auto;
+      border-radius: 1rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    }
+
+    .heading {
+      font-size: 2.8vw;
+      margin: 1rem 0;
+      color: #1a237e;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .digital-clock,
+    .countdown-timer {
+      font-size: 6vw; /* Increased font size for both current time and remaining time */
+      background: linear-gradient(45deg, #ffffff, #f0f0f0);
+      padding: 1rem 2rem;
+      border-radius: 2.5rem;
+      text-align: center;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
+      color: #b71c1c;
+    }
+
+    .countdown-timer {
+      width: 95%;
+    }
+
+    .right-section {
+      flex: 1.8;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rules-section {
+      display: inline-block;
+      white-space: normal;
+      animation: scrollUp 150s linear infinite;
+    }
+
+    @keyframes scrollUp {
+      0% {
+        transform: translateY(100%);
+      }
+
+      100% {
+        transform: translateY(-100%);
+      }
+    }
+
+    h1 {
+      font-size: 5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #d32f2f;
+    }
+
+    h2 {
+      font-size: 4rem;
+      text-align: center;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1976d2;
+    }
+
+    ul {
+      margin-left: 2rem;
+      margin-bottom: 2rem;
+      line-height: 2.5;
+      font-size: 2.5rem;
+    }
+
+    li {
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .flex-row {
+        flex-direction: column;
+      }
+
+      .left-section {
+        border-right: none;
+        border-bottom: 3px solid #999;
+      }
+    }
+
+    /* Hidden section and smart TV timer layout */
+    .hidden {
+      display: none !important;
+    }
+
+    .fullscreen-timers {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .fullscreen-timers .logo img {
+      max-width: 30%;
+    }
+
+    .fullscreen-timers .heading {
+      font-size: 3vw;
+    }
+
+    .fullscreen-timers .digital-clock,
+    .fullscreen-timers .countdown-timer {
+      font-size: 5vw;
+      padding: 1.5rem 2.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex-row">
+    <!-- Left Section -->
+    <div class="left-section" id="left-section">
+      <div class="logo">
+        <img src="college-logo.png" alt="College Logo" />
+      </div>
+
+      <div class="heading">Current Time</div>
+      <div class="digital-clock" id="digital-clock">00:00:00</div>
+
+      <div class="heading">Remaining Time</div>
+      <div class="countdown-timer" id="countdown-timer">00:00:00</div>
+    </div>
+
+    <!-- Right Section (Rules) -->
+    <div class="right-section" id="right-section">
+      <div class="rules-section">
+        <h1>📋 EXAMINATION RULES</h1>
+
+        <h2>DURING THE EXAMINATION</h2>
+        <ul>
+          <li>Occupy your assigned seat as directed by the invigilators.</li>
+          <li>Bring your own stationery. Sharing is strictly prohibited.</li>
+          <li>No electronic devices allowed in the examination hall.</li>
+          <li>Maintain strict silence throughout the exam.</li>
+          <li>Follow invigilators’ instructions at all times.</li>
+          <li>Fill out all details correctly on answer booklets.</li>
+          <li>Use only blue or black pens. No correction fluid.</li>
+          <li>Do not write before the bell or after the end bell.</li>
+        </ul>
+
+        <h2>⚠️ IMPORTANT NOTICE</h2>
+        <ul>
+          <li>Cheating will result in exam cancellation.</li>
+          <li>Do not use ink erasers or white ink on NEB sheets.</li>
+          <li>Submit your answer sheet only to the invigilator.</li>
+          <li>Collect your belongings after the exam.</li>
+          <li>Do not gather around exam areas after finishing.</li>
+          <li>Discipline and honesty are mandatory.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getKathmanduTime() {
+      // Get the current time in Kathmandu timezone (UTC +5:45)
+      const kathmanduTime = new Date().toLocaleString('en-GB', { timeZone: 'Asia/Kathmandu' });
+      return new Date(kathmanduTime);
+    }
+  
+    function updateDigitalClock() {
+      const now = getKathmanduTime();
+      document.getElementById('digital-clock').textContent =
+        now.toLocaleTimeString('en-GB', { hour12: false });
+      controlVisibility(now);
+    }
+  
+    function startCountdown() {
+      const countdownTimer = document.getElementById('countdown-timer');
+      const targetTime = getKathmanduTime();
+      targetTime.setHours(11, 0, 0, 0);  // Set target to 11:00 AM Kathmandu time
+      const interval = setInterval(() => {
+        const now = getKathmanduTime();
+        const timeLeft = targetTime - now;
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          countdownTimer.textContent = "00:00:00";
+        } else {
+          const hours = String(Math.floor(timeLeft / (1000 * 60 * 60))).padStart(2, '0');
+          const minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+          const seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2, '0');
+          countdownTimer.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+      }, 1000);
+    }
+  
+    function controlVisibility(now) {
+      const hour = now.getHours();
+      const left = document.getElementById('left-section');
+      const right = document.getElementById('right-section');
+  
+      // Check if time is between 8 AM and 11 AM in Kathmandu time
+      if (hour >= 8 && hour < 11) {
+        right.classList.add('hidden');
+        left.classList.add('fullscreen-timers');
+      } else {
+        right.classList.remove('hidden');
+        left.classList.remove('fullscreen-timers');
+      }
+    }
+  
+    updateDigitalClock();
+    setInterval(updateDigitalClock, 1000);
+    startCountdown();
+  </script>
+  
+</body>
+
+</html>
