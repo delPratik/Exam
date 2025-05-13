@@ -65,7 +65,7 @@
 
     .digital-clock,
     .countdown-timer {
-      font-size: 6vw; /* Increased font size for both current time and remaining time */
+      font-size: 6vw;
       background: linear-gradient(45deg, #ffffff, #f0f0f0);
       padding: 1rem 2rem;
       border-radius: 2.5rem;
@@ -142,7 +142,6 @@
       }
     }
 
-    /* Hidden section and smart TV timer layout */
     .hidden {
       display: none !important;
     }
@@ -170,7 +169,6 @@
 
 <body>
   <div class="flex-row">
-    <!-- Left Section -->
     <div class="left-section" id="left-section">
       <div class="logo">
         <img src="college-logo.png" alt="College Logo" />
@@ -183,7 +181,6 @@
       <div class="countdown-timer" id="countdown-timer">00:00:00</div>
     </div>
 
-    <!-- Right Section (Rules) -->
     <div class="right-section" id="right-section">
       <div class="rules-section">
         <h1>📋 EXAMINATION RULES</h1>
@@ -215,43 +212,55 @@
 
   <script>
     function getKathmanduTime() {
-      // Get the current time in Kathmandu timezone (UTC +5:45)
-      const kathmanduTime = new Date().toLocaleString('en-GB', { timeZone: 'Asia/Kathmandu' });
-      return new Date(kathmanduTime);
+      const now = new Date();
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const kathmanduOffset = 5.75 * 60 * 60 * 1000; // 5 hours 45 minutes in ms
+      return new Date(utc + kathmanduOffset);
     }
-  
+
     function updateDigitalClock() {
       const now = getKathmanduTime();
-      document.getElementById('digital-clock').textContent =
-        now.toLocaleTimeString('en-GB', { hour12: false });
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
       controlVisibility(now);
     }
-  
+
     function startCountdown() {
       const countdownTimer = document.getElementById('countdown-timer');
-      const targetTime = getKathmanduTime();
-      targetTime.setHours(11, 0, 0, 0);  // Set target to 11:00 AM Kathmandu time
+
+      const now = getKathmanduTime();
+      const target = new Date(now);
+      target.setHours(11, 0, 0, 0); // 11:00 AM
+
+      if (now >= target) {
+        countdownTimer.textContent = "00:00:00";
+        return;
+      }
+
       const interval = setInterval(() => {
         const now = getKathmanduTime();
-        const timeLeft = targetTime - now;
-        if (timeLeft <= 0) {
+        let diff = target - now;
+
+        if (diff <= 0) {
           clearInterval(interval);
           countdownTimer.textContent = "00:00:00";
-        } else {
-          const hours = String(Math.floor(timeLeft / (1000 * 60 * 60))).padStart(2, '0');
-          const minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-          const seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2, '0');
-          countdownTimer.textContent = `${hours}:${minutes}:${seconds}`;
+          return;
         }
+
+        const hrs = String(Math.floor(diff / 3600000)).padStart(2, '0');
+        const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+        countdownTimer.textContent = `${hrs}:${mins}:${secs}`;
       }, 1000);
     }
-  
+
     function controlVisibility(now) {
       const hour = now.getHours();
       const left = document.getElementById('left-section');
       const right = document.getElementById('right-section');
-  
-      // Check if time is between 8 AM and 11 AM in Kathmandu time
+
       if (hour >= 8 && hour < 11) {
         right.classList.add('hidden');
         left.classList.add('fullscreen-timers');
@@ -260,12 +269,11 @@
         left.classList.remove('fullscreen-timers');
       }
     }
-  
+
     updateDigitalClock();
     setInterval(updateDigitalClock, 1000);
     startCountdown();
   </script>
-  
 </body>
 
 </html>
