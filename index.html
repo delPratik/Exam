@@ -92,12 +92,16 @@
     .rules-section {
       display: inline-block;
       white-space: normal;
-      animation: scrollUp 150s linear infinite;
+      animation: scrollUp 60s linear infinite;
     }
 
     @keyframes scrollUp {
       0% {
         transform: translateY(100%);
+      }
+
+      80% {
+        transform: translateY(-100%);
       }
 
       100% {
@@ -218,76 +222,93 @@
       return new Date(utc + kathmanduOffset);
     }
 
-    function updateDigitalClock() {
-      const now = getKathmanduTime();
+    function startTimers() {
+      setInterval(() => {
+        const now = getKathmanduTime();
+        updateDigitalClockDisplay(now);
+        updateCountdown(now);
+        controlVisibility(now);
+      }, 1000);
+    }
+
+    function updateDigitalClockDisplay(now) {
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
       document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
-      controlVisibility(now);
     }
 
-    function startCountdown() {
+    function updateCountdown(now) {
       const countdownTimer = document.getElementById('countdown-timer');
       const countdownHeading = document.getElementById('countdown-heading');
 
-      const interval = setInterval(() => {
-        const now = getKathmanduTime();
+      const today = new Date(now);
+      today.setHours(0, 0, 0, 0);
 
-        // Shift 1
-        const shift1Start = new Date(now);
-        shift1Start.setHours(7, 0, 0, 0);
-        const shift1End = new Date(now);
-        shift1End.setHours(10, 0, 0, 0);
+      const shift1Start = new Date(today);
+      shift1Start.setHours(7, 0, 0, 0);
 
-        // Shift 2
-        const shift2Start = new Date(now);
-        shift2Start.setHours(11, 30, 0, 0);
-        const shift2End = new Date(now);
-        shift2End.setHours(14, 30, 0, 0);
+      const shift1End = new Date(today);
+      shift1End.setHours(10, 0, 0, 0);
 
-        let target = null;
-        let mode = '';
+      const shift2Start = new Date(today);
+      shift2Start.setHours(11, 30, 0, 0);
 
-        if (now < shift1Start) {
-          target = shift1Start;
-          mode = 'start';
-        } else if (now >= shift1Start && now < shift1End) {
-          target = shift1End;
-          mode = 'remaining';
-        } else if (now < shift2Start) {
-          target = shift2Start;
-          mode = 'start';
-        } else if (now >= shift2Start && now < shift2End) {
-          target = shift2End;
-          mode = 'remaining';
-        }
+      const shift2End = new Date(today);
+      shift2End.setHours(14, 30, 0, 0);
 
-        if (target) {
-          const diff = target - now;
-          if (diff > 0) {
-            const hrs = String(Math.floor(diff / 3600000)).padStart(2, '0');
-            const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-            const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-            countdownTimer.textContent = `${hrs}:${mins}:${secs}`;
-            countdownHeading.textContent = mode === 'start' ? 'Exam Starts In' : 'Remaining Time';
-          } else {
-            countdownTimer.textContent = '00:00:00';
-            countdownHeading.textContent = 'Remaining Time';
-          }
-        } else {
-          countdownTimer.textContent = '00:00:00';
-          countdownHeading.textContent = 'Remaining Time';
-        }
-      }, 1000);
+      let target = null;
+      let mode = '';
+
+      if (now < shift1Start) {
+        target = shift1Start;
+        mode = 'start';
+      } else if (now >= shift1Start && now < shift1End) {
+        target = shift1End;
+        mode = 'remaining';
+      } else if (now >= shift1End && now < shift2Start) {
+        target = shift2Start;
+        mode = 'start';
+      } else if (now >= shift2Start && now < shift2End) {
+        target = shift2End;
+        mode = 'remaining';
+      }
+
+      if (target) {
+        const diff = target - now;
+        const hrs = String(Math.floor(diff / 3600000)).padStart(2, '0');
+        const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+        countdownTimer.textContent = `${hrs}:${mins}:${secs}`;
+        countdownHeading.textContent = mode === 'start' ? 'Exam Starts In' : 'Remaining Time';
+      } else {
+        countdownTimer.textContent = '00:00:00';
+        countdownHeading.textContent = 'Remaining Time';
+      }
     }
 
     function controlVisibility(now) {
-      const hour = now.getHours();
+      const today = new Date(now);
+      today.setHours(0, 0, 0, 0);
+
+      const shift1Start = new Date(today);
+      shift1Start.setHours(7, 0, 0, 0);
+
+      const shift1End = new Date(today);
+      shift1End.setHours(10, 0, 0, 0);
+
+      const shift2Start = new Date(today);
+      shift2Start.setHours(11, 30, 0, 0);
+
+      const shift2End = new Date(today);
+      shift2End.setHours(14, 30, 0, 0);
+
       const left = document.getElementById('left-section');
       const right = document.getElementById('right-section');
 
-      if ((hour >= 7 && hour < 10) || (hour >= 11 && hour < 14)) {
+      const inExamTime = (now >= shift1Start && now < shift1End) || (now >= shift2Start && now < shift2End);
+
+      if (inExamTime) {
         right.classList.add('hidden');
         left.classList.add('fullscreen-timers');
       } else {
@@ -296,9 +317,7 @@
       }
     }
 
-    updateDigitalClock();
-    setInterval(updateDigitalClock, 1000);
-    startCountdown();
+    startTimers();
   </script>
 </body>
 
