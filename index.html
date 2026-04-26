@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Examination Rules and Timer</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -49,7 +50,7 @@
     }
 
     .logo img {
-      max-width: 50%;
+      max-width: 25%;
       height: auto;
       border-radius: 1rem;
       box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
@@ -59,25 +60,19 @@
       font-size: 2.8vw;
       margin: 1rem 0;
       color: #1a237e;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       text-align: center;
     }
 
     .digital-clock,
     .countdown-timer {
       font-size: 6vw;
-      background: linear-gradient(45deg, #ffffff, #f0f0f0);
       padding: 1rem 2rem;
       border-radius: 2.5rem;
       text-align: center;
       width: 90%;
       max-width: 800px;
-      box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
       color: #b71c1c;
-    }
-
-    .countdown-timer {
-      width: 95%;
+      background: #fff;
     }
 
     .right-section {
@@ -90,22 +85,18 @@
     }
 
     .rules-section {
-      display: inline-block;
-      white-space: normal;
-      animation: scrollUp 60s linear infinite;
+      display: flex;
+      flex-direction: column;
+      animation: scrollUp 120s linear infinite;
     }
 
     @keyframes scrollUp {
       0% {
-        transform: translateY(100%);
-      }
-
-      80% {
-        transform: translateY(-100%);
+        transform: translateY(0);
       }
 
       100% {
-        transform: translateY(-100%);
+        transform: translateY(-50%);
       }
     }
 
@@ -135,17 +126,6 @@
       margin-bottom: 2rem;
     }
 
-    @media (max-width: 768px) {
-      .flex-row {
-        flex-direction: column;
-      }
-
-      .left-section {
-        border-right: none;
-        border-bottom: 3px solid #999;
-      }
-    }
-
     .hidden {
       display: none !important;
     }
@@ -154,26 +134,16 @@
       justify-content: center;
       text-align: center;
     }
-
-    .fullscreen-timers .logo img {
-      max-width: 30%;
-    }
-
-    .fullscreen-timers .heading {
-      font-size: 3vw;
-    }
-
-    .fullscreen-timers .digital-clock,
-    .fullscreen-timers .countdown-timer {
-      font-size: 5vw;
-      padding: 1.5rem 2.5rem;
-    }
   </style>
 </head>
 
 <body>
+
   <div class="flex-row">
+
+    <!-- LEFT -->
     <div class="left-section" id="left-section">
+
       <div class="logo">
         <img src="college-logo.png" alt="College Logo" />
       </div>
@@ -183,43 +153,106 @@
 
       <div class="heading" id="countdown-heading">Exam Starts In</div>
       <div class="countdown-timer" id="countdown-timer">00:00:00</div>
+
     </div>
 
+    <!-- RIGHT -->
     <div class="right-section" id="right-section">
+
       <div class="rules-section">
-        <h1>📋 EXAMINATION RULES</h1>
 
-        <h2>DURING THE EXAMINATION</h2>
-        <ul>
-          <li>Occupy your assigned seat as directed by the invigilators.</li>
-          <li>Bring your own stationery. Sharing is strictly prohibited.</li>
-          <li>No electronic devices allowed in the examination hall.</li>
-          <li>Maintain strict silence throughout the exam.</li>
-          <li>Follow invigilators’ instructions at all times.</li>
-          <li>Fill out all details correctly on answer booklets.</li>
-          <li>Use only blue or black pens. No correction fluid.</li>
-          <li>Do not write before the bell or after the end bell.</li>
-        </ul>
+        <!-- COPY 1 -->
+        <div>
+          <h1>EXAMINATION RULES & GUIDELINES</h1>
 
-        <h2>⚠️ IMPORTANT NOTICE</h2>
-        <ul>
-          <li>Cheating will result in exam cancellation.</li>
-          <li>Do not use ink erasers or white ink on NEB sheets.</li>
-          <li>Submit your answer sheet only to the invigilator.</li>
-          <li>Collect your belongings after the exam.</li>
-          <li>Do not gather around exam areas after finishing.</li>
-          <li>Discipline and honesty are mandatory.</li>
-        </ul>
+          <h2>BEFORE THE EXAMINATION</h2>
+          <ul>
+            <li>All candidates must arrive at least 15 minutes prior to the scheduled start time.</li>
+            <li>Entry to the examination hall without a valid admit card is strictly prohibited.</li>
+            <li>No candidate will be permitted to enter the examination hall after the official commencement time under any circumstances.</li>
+            <li>Candidates must occupy only the seat assigned to them. Unauthorized seat changes are not allowed.</li>
+            <li>All personal belongings, including bags, books, notes, and electronic devices, must be kept outside the examination hall or in designated areas.</li>
+            <li>Candidates must carefully read all instructions provided on the question paper before beginning the examination.</li>
+          </ul>
+
+          <h2>DURING THE EXAMINATION</h2>
+          <ul>
+            <li>Candidates must bring and use their own stationery. Borrowing or lending materials is strictly prohibited.</li>
+            <li>Only blue or black ink pens are permitted for writing answers.</li>
+            <li>Absolute silence must be maintained throughout the examination period.</li>
+            <li>The possession or use of mobile phones, smart devices, or any unauthorized electronic equipment is strictly forbidden.</li>
+            <li>Any form of cheating, copying, or unfair practice will result in immediate disqualification and disciplinary action.</li>
+            <li>Candidates must strictly follow all instructions given by the invigilators at all times.</li>
+            <li>Leaving the examination hall without permission from the invigilator is not allowed.</li>
+          </ul>
+
+          <h2>AFTER THE EXAMINATION</h2>
+          <ul>
+            <li>Candidates must remain seated until all answer scripts have been collected and verified by the invigilator.</li>
+            <li>No candidate is allowed to leave the hall without submitting their answer sheet.</li>
+            <li>Candidates must ensure they have collected all their personal belongings before leaving the premises.</li>
+          </ul>
+
+          <h2>GENERAL INSTRUCTIONS</h2>
+          <ul>
+            <li>All candidates must adhere to discipline, honesty, and integrity throughout the examination process.</li>
+            <li>Any violation of examination rules will result in strict disciplinary action as per institutional and examination board regulations.</li>
+            <li>Respect towards invigilators and fellow candidates must be maintained at all times.</li>
+            <li>The decision of the examination authority shall be final and binding in all matters.</li>
+          </ul>
+        </div>
+
+        <!-- COPY 2 -->
+        <div>
+          <h1>EXAMINATION RULES & GUIDELINES</h1>
+
+          <h2>BEFORE THE EXAMINATION</h2>
+          <ul>
+            <li>All candidates must arrive at least 15 minutes prior to the scheduled start time.</li>
+            <li>Entry to the examination hall without a valid admit card is strictly prohibited.</li>
+            <li>No candidate will be permitted to enter the examination hall after the official commencement time under any circumstances.</li>
+            <li>Candidates must occupy only the seat assigned to them. Unauthorized seat changes are not allowed.</li>
+            <li>All personal belongings, including bags, books, notes, and electronic devices, must be kept outside the examination hall or in designated areas.</li>
+            <li>Candidates must carefully read all instructions provided on the question paper before beginning the examination.</li>
+          </ul>
+
+          <h2>DURING THE EXAMINATION</h2>
+          <ul>
+            <li>Candidates must bring and use their own stationery. Borrowing or lending materials is strictly prohibited.</li>
+            <li>Only blue or black ink pens are permitted for writing answers.</li>
+            <li>Absolute silence must be maintained throughout the examination period.</li>
+            <li>The possession or use of mobile phones, smart devices, or any unauthorized electronic equipment is strictly forbidden.</li>
+            <li>Any form of cheating, copying, or unfair practice will result in immediate disqualification and disciplinary action.</li>
+            <li>Candidates must strictly follow all instructions given by the invigilators at all times.</li>
+            <li>Leaving the examination hall without permission from the invigilator is not allowed.</li>
+          </ul>
+
+          <h2>AFTER THE EXAMINATION</h2>
+          <ul>
+            <li>Candidates must remain seated until all answer scripts have been collected and verified by the invigilator.</li>
+            <li>No candidate is allowed to leave the hall without submitting their answer sheet.</li>
+            <li>Candidates must ensure they have collected all their personal belongings before leaving the premises.</li>
+          </ul>
+
+          <h2>GENERAL INSTRUCTIONS</h2>
+          <ul>
+            <li>All candidates must adhere to discipline, honesty, and integrity throughout the examination process.</li>
+            <li>Any violation of examination rules will result in strict disciplinary action as per institutional and examination board regulations.</li>
+            <li>Respect towards invigilators and fellow candidates must be maintained at all times.</li>
+            <li>The decision of the examination authority shall be final and binding in all matters.</li>
+          </ul>
+        </div>
+
       </div>
     </div>
+
   </div>
 
   <script>
     function getKathmanduTime() {
       const now = new Date();
       const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-      const kathmanduOffset = 5.75 * 60 * 60 * 1000;
-      return new Date(utc + kathmanduOffset);
+      return new Date(utc + 5.75 * 60 * 60 * 1000);
     }
 
     function startTimers() {
@@ -232,83 +265,56 @@
     }
 
     function updateDigitalClockDisplay(now) {
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('digital-clock').textContent = `${h}:${m}:${s}`;
     }
 
-    function updateCountdown(now) {
-      const countdownTimer = document.getElementById('countdown-timer');
-      const countdownHeading = document.getElementById('countdown-heading');
-
+    function getShiftTimes(now) {
       const today = new Date(now);
       today.setHours(0, 0, 0, 0);
 
-      const shift1Start = new Date(today);
-      shift1Start.setHours(7, 0, 0, 0);
+      const shift1Start = new Date(today); shift1Start.setHours(8, 0, 0);
+      const shift1End = new Date(today); shift1End.setHours(11, 0, 0);
+      const shift2Start = new Date(today); shift2Start.setHours(13, 30, 0);
+      const shift2End = new Date(today); shift2End.setHours(16, 30, 0);
 
-      const shift1End = new Date(today);
-      shift1End.setHours(10, 0, 0, 0);
+      return { shift1Start, shift1End, shift2Start, shift2End };
+    }
 
-      const shift2Start = new Date(today);
-      shift2Start.setHours(11, 30, 0, 0);
+    function updateCountdown(now) {
+      const el = document.getElementById('countdown-timer');
+      const heading = document.getElementById('countdown-heading');
+      const { shift1Start, shift1End, shift2Start, shift2End } = getShiftTimes(now);
 
-      const shift2End = new Date(today);
-      shift2End.setHours(14, 30, 0, 0);
+      let target = null, mode = '';
 
-      let target = null;
-      let mode = '';
-
-      if (now < shift1Start) {
-        target = shift1Start;
-        mode = 'start';
-      } else if (now >= shift1Start && now < shift1End) {
-        target = shift1End;
-        mode = 'remaining';
-      } else if (now >= shift1End && now < shift2Start) {
-        target = shift2Start;
-        mode = 'start';
-      } else if (now >= shift2Start && now < shift2End) {
-        target = shift2End;
-        mode = 'remaining';
-      }
+      if (now < shift1Start) { target = shift1Start; mode = 'start'; }
+      else if (now < shift1End) { target = shift1End; mode = 'remaining'; }
+      else if (now < shift2Start) { target = shift2Start; mode = 'start'; }
+      else if (now < shift2End) { target = shift2End; mode = 'remaining'; }
 
       if (target) {
         const diff = target - now;
-        const hrs = String(Math.floor(diff / 3600000)).padStart(2, '0');
-        const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-        const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-        countdownTimer.textContent = `${hrs}:${mins}:${secs}`;
-        countdownHeading.textContent = mode === 'start' ? 'Exam Starts In' : 'Remaining Time';
-      } else {
-        countdownTimer.textContent = '00:00:00';
-        countdownHeading.textContent = 'Remaining Time';
+        const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+        const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+        el.textContent = `${h}:${m}:${s}`;
+        heading.textContent = mode === 'start' ? 'Exam Starts In' : 'Remaining Time';
       }
     }
 
     function controlVisibility(now) {
-      const today = new Date(now);
-      today.setHours(0, 0, 0, 0);
-
-      const shift1Start = new Date(today);
-      shift1Start.setHours(7, 0, 0, 0);
-
-      const shift1End = new Date(today);
-      shift1End.setHours(10, 0, 0, 0);
-
-      const shift2Start = new Date(today);
-      shift2Start.setHours(11, 30, 0, 0);
-
-      const shift2End = new Date(today);
-      shift2End.setHours(14, 30, 0, 0);
-
+      const { shift1Start, shift1End, shift2Start, shift2End } = getShiftTimes(now);
       const left = document.getElementById('left-section');
       const right = document.getElementById('right-section');
 
-      const inExamTime = (now >= shift1Start && now < shift1End) || (now >= shift2Start && now < shift2End);
+      const inExam =
+        (now >= shift1Start && now < shift1End) ||
+        (now >= shift2Start && now < shift2End);
 
-      if (inExamTime) {
+      if (inExam) {
         right.classList.add('hidden');
         left.classList.add('fullscreen-timers');
       } else {
@@ -319,6 +325,6 @@
 
     startTimers();
   </script>
-</body>
 
+</body>
 </html>
